@@ -6,14 +6,66 @@
         xmlns:wpfx="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:MalinSatelliteDataProcessing"
         mc:Ignorable="d"
-        Title="Data Processing" Height="700" Width="600
-        ">
+        Title="Data Processing" Height="750" Width="650">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="29*"/>
-            <ColumnDefinition Width="571*"/>
+            <ColumnDefinition Width="6*"/>
+            <ColumnDefinition Width="7*"/>
+            <ColumnDefinition Width="7*"/>
         </Grid.ColumnDefinitions>
-        <wpfx:IntegerUpDown x:Name="sigmaUpDown" Value="100"  Increment="10" Width="50" Height="50" Grid.Column="1" Margin="108,49,413,585" />
-        <wpfx:IntegerUpDown x:Name="muUpDown" Value="100" Increment="10" Width="50" Height="50" Grid.Column="1" Margin="30,49,491,585" RenderTransformOrigin="0.474,0.575" />
+        <wpfx:IntegerUpDown x:Name="sigmaUpDown" Value="100"  Increment="10" Margin="108,69,32,617" />
+        <wpfx:IntegerUpDown x:Name="muUpDown" Value="100" Increment="10" Margin="24,69,119,617" />
+        <Button x:Name="loadButton" Content="Load Sensor Data" HorizontalAlignment="Left" Margin="22,129,0,0" VerticalAlignment="Top" Height="22" Width="148"/>
+        <ListView x:Name="sensorListView" d:ItemsSource="{d:SampleData ItemCount=5}" Width="150" Height="500" Margin="15,158,15,26">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Sensor A" Width="70" DisplayMemberBinding="{Binding Path=sensorA}"/>
+                    <GridViewColumn Header="Sensor B" Width="70" DisplayMemberBinding="{Binding Path=sensorB}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ListBox x:Name="sensorAListBox" Grid.Column="1" d:ItemsSource="{d:SampleData ItemCount=5}" Width="80" Margin="130,60,10,26" Height="595"/>
+        <ListBox x:Name="sensorBListBox" Grid.Column="2" d:ItemsSource="{d:SampleData ItemCount=5}" Width="80" Height="595" Margin="130,60,10,26"/>
+        <Label Content="Sigma" HorizontalAlignment="Left" Margin="24,46,0,0" VerticalAlignment="Top"/>
+        <Label Content="Mu" HorizontalAlignment="Left" Margin="108,46,0,0" VerticalAlignment="Top"/>
+        <Label Grid.Column="1" Content="Sensor A" HorizontalAlignment="Center" Margin="0,18,0,0" VerticalAlignment="Top" FontSize="14"/>
+        <Label Grid.Column="2" Content="Sensor B" HorizontalAlignment="Center" Margin="0,18,0,0" VerticalAlignment="Top" FontSize="14"/>
+        <Button x:Name="aBinaryIterativeButton" Grid.Column="1" Content="Search" HorizontalAlignment="Left" Margin="20,110,0,0" VerticalAlignment="Top" Width="50" Height="20"/>
+        <Button x:Name="aBinaryRecursiveButton" Grid.Column="1" Content="Search" HorizontalAlignment="Left" Margin="20,230,0,0" VerticalAlignment="Top" Width="50" Height="20"/>
+        <Button x:Name="aSelectionSortButton" Grid.Column="1" Content="Sort" HorizontalAlignment="Left" Margin="20,450,0,0" VerticalAlignment="Top" Width="50" Height="20"/>
+        <Button x:Name="aInsertionSortButton" Grid.Column="1" Content="Sort" HorizontalAlignment="Left" Margin="20,570,0,0" VerticalAlignment="Top" Width="50" Height="20"/>
+        <TextBox x:Name="aSearchTextBox" Grid.Column="1" HorizontalAlignment="Left" Margin="75,330,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="40" Height="20"/>
+        <Label HorizontalAlignment="Left" Margin="20,320,0,0" VerticalAlignment="Top" Width="50" Height="50" FontSize="10"  Grid.Column="1" Grid.RowSpan="1">
+            <TextBlock TextWrapping="WrapWithOverflow" Width="35" Height="35" FontSize="12">
+                Search Target
+            </TextBlock>
+        </Label>
+        <Label Grid.Column="1" Content="Binary Search Iterative" HorizontalAlignment="Left" Margin="0,85,0,0" VerticalAlignment="Top"/>
+        <Label Grid.Column="1" Content="Binary Search Recursive" HorizontalAlignment="Left" Margin="0,205,0,0" VerticalAlignment="Top"/>
+        <Label Grid.Column="1" Content="Selection Sort" HorizontalAlignment="Left" Margin="20,425,0,0" VerticalAlignment="Top"/>
+        <Label Grid.Column="1" Content="Insertion Sort" HorizontalAlignment="Left" Margin="20,545,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="aBinaryIterativeTextBox" Grid.Column="1" HorizontalAlignment="Left" Margin="20,135,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="100" IsReadOnly="True" Background="#FFE5E7EC"/>
+        <TextBox x:Name="aBinaryRecursiveTextBox" Grid.Column="1" HorizontalAlignment="Left" Margin="20,255,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="100" IsReadOnly="True" Background="#FFE5E7EC"/>
+        <TextBox x:Name="aSelectionSortTextBox" Grid.Column="1" HorizontalAlignment="Left" Margin="20,475,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="100" IsReadOnly="True" Background="#FFE5E7EC"/>
+        <TextBox x:Name="aInsertionSortTextBox" Grid.Column="1" HorizontalAlignment="Left" Margin="20,595,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="100" IsReadOnly="True" Background="#FFE5E7EC"/>
+
+        <Button x:Name="bBinaryIterativeButton" Grid.Column="2" Content="Search" HorizontalAlignment="Left" Margin="20,110,0,0" VerticalAlignment="Top" Width="50" Height="20"/>
+        <Button x:Name="bBinaryRecursiveButton" Grid.Column="2" Content="Search" HorizontalAlignment="Left" Margin="20,230,0,0" VerticalAlignment="Top" Width="50" Height="20"/>
+        <Button x:Name="bSelectionSortButton" Grid.Column="2" Content="Sort" HorizontalAlignment="Left" Margin="20,450,0,0" VerticalAlignment="Top" Width="50" Height="20"/>
+        <Button x:Name="bInsertionSortButton" Grid.Column="2" Content="Sort" HorizontalAlignment="Left" Margin="20,570,0,0" VerticalAlignment="Top" Width="50" Height="20"/>
+        <TextBox x:Name="bSearchTextBox" Grid.Column="2" HorizontalAlignment="Left" Margin="75,330,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="40" Height="20"/>
+        <Label HorizontalAlignment="Left" Margin="20,320,0,0" VerticalAlignment="Top" Width="50" Height="50" FontSize="10"  Grid.Column="2" Grid.RowSpan="1">
+            <TextBlock TextWrapping="WrapWithOverflow" Width="35" Height="35" FontSize="12">
+                Search Target
+            </TextBlock>
+        </Label>
+        <Label Grid.Column="2" Content="Binary Search Iterative" HorizontalAlignment="Left" Margin="0,85,0,0" VerticalAlignment="Top"/>
+        <Label Grid.Column="2" Content="Binary Search Recursive" HorizontalAlignment="Left" Margin="0,205,0,0" VerticalAlignment="Top"/>
+        <Label Grid.Column="2" Content="Selection Sort" HorizontalAlignment="Left" Margin="20,425,0,0" VerticalAlignment="Top"/>
+        <Label Grid.Column="2" Content="Insertion Sort" HorizontalAlignment="Left" Margin="20,545,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="bBinaryIterativeTextBox" Grid.Column="2" HorizontalAlignment="Left" Margin="20,135,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="100" IsReadOnly="True" Background="#FFE5E7EC"/>
+        <TextBox x:Name="bBinaryRecursiveTextBox" Grid.Column="2" HorizontalAlignment="Left" Margin="20,255,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="100" IsReadOnly="True" Background="#FFE5E7EC"/>
+        <TextBox x:Name="bSelectionSortTextBox" Grid.Column="2" HorizontalAlignment="Left" Margin="20,475,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="100" IsReadOnly="True" Background="#FFE5E7EC"/>
+        <TextBox x:Name="bInsertionSortTextBox" Grid.Column="2" HorizontalAlignment="Left" Margin="20,595,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="100" IsReadOnly="True" Background="#FFE5E7EC"/>
     </Grid>
 </Window>
