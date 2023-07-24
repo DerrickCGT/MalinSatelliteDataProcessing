@@ -13,14 +13,14 @@
             <ColumnDefinition Width="7*"/>
             <ColumnDefinition Width="7*"/>
         </Grid.ColumnDefinitions>
-        <wpfx:IntegerUpDown x:Name="sigmaUpDown" Value="100"  Increment="10" Margin="108,69,32,617" />
-        <wpfx:IntegerUpDown x:Name="muUpDown" Value="100" Increment="10" Margin="24,69,119,617" />
-        <Button x:Name="loadButton" Content="Load Sensor Data" HorizontalAlignment="Left" Margin="22,129,0,0" VerticalAlignment="Top" Height="22" Width="148"/>
+        <wpfx:IntegerUpDown x:Name="sigmaUpDown" Value="10"  Increment="10" Margin="108,69,32,617" Text="10" />
+        <wpfx:IntegerUpDown x:Name="muUpDown" Value="10" Increment="10" Margin="24,69,119,617" Text="10" UpdateValueOnEnterKey="True" />
+        <Button x:Name="loadButton" Content="Load Sensor Data" HorizontalAlignment="Left" Margin="22,129,0,0" VerticalAlignment="Top" Height="22" Width="148" Click="loadButton_Click"/>
         <ListView x:Name="sensorListView" d:ItemsSource="{d:SampleData ItemCount=5}" Width="150" Height="500" Margin="15,158,15,26">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Sensor A" Width="70" DisplayMemberBinding="{Binding Path=sensorA}"/>
-                    <GridViewColumn Header="Sensor B" Width="70" DisplayMemberBinding="{Binding Path=sensorB}"/>
+                    <GridViewColumn Header="Sensor A" Width="70" DisplayMemberBinding="{Binding Path=SensorA}"/>
+                    <GridViewColumn Header="Sensor B" Width="70" DisplayMemberBinding="{Binding Path=SensorB}"/>
                 </GridView>
             </ListView.View>
         </ListView>
