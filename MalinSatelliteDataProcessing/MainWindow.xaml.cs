@@ -99,8 +99,7 @@ namespace MalinSatelliteDataProcessing
         {
             LoadData();
             ShowAllSensorData();
-            DisplayListboxData(sensorDataA, sensorAListBox);
-            DisplayListboxData(sensorDataB, sensorBListBox);
+  
         }
         
         #endregion
@@ -137,29 +136,58 @@ namespace MalinSatelliteDataProcessing
             {
                 int min = i;
 
-                for (int j = i +1; j < max; j++)
+                for (int j = i + 1; j < max; j++)
                 {
-                    LinkedListNode<double> currentMin = LinkedList.Find(LinkedList.ElementAt(min));
-                    LinkedListNode<double> currentJ = LinkedList.Find(LinkedList.ElementAt(j));
-                    if (currentJ.Value < currentMin.Value)
+                    if (LinkedList.ElementAt(j) < LinkedList.ElementAt(min))
                     {
-                        min = j;                        
-                    }                    
-                }       
-                double temp = currentMin.Value;
-                currentMin.Value = currentJ.Value;
-                currentJ.Value = temp;
+                        min = j;
+                    }
+                }
+                LinkedListNode<double> currentMin = LinkedList.Find(LinkedList.ElementAt(min));
+                LinkedListNode<double> currentI = LinkedList.Find(LinkedList.ElementAt(i));
+                var temp = currentMin.Value;
+                currentMin.Value = currentI.Value;
+                currentI.Value = temp;
             }
+
             return true;
         }
+
+        //below is the confusion of code and can be fixed by adding the new line of code
+        //private void SelectionSort(LinkedList<double> LinkedList)
+        //{
+        //    int max = NumberOfNodes(LinkedList);
+
+        //    for (int i = 0; i < max; i++)
+        //    {
+        //        int min = i;
+        //        LinkedListNode<double> currentMin = LinkedList.Find(LinkedList.ElementAt(min));
+        //        LinkedListNode<double> currentI = LinkedList.Find(LinkedList.ElementAt(i));
+
+        //        for (int j = i + 1; j < max; j++)
+        //        {
+        //            LinkedListNode<double> tempNode = LinkedList.Find(LinkedList.ElementAt(j));
+        //            if (tempNode.Value < currentMin.Value)
+        //            {
+        //                min = j;
+        //                  currentMin = tempnode //it is require to add this line as currentMin will not automatically update
+                        
+        //            }
+        //        }
+                
+        //        double temp = currentMin.Value;
+        //        currentMin.Value = currentI.Value;
+        //        currentI.Value = temp;
+        //    }
+        //}
 
         private Boolean InsertionSort(LinkedList<double> LinkedList)
         {
             int max = NumberOfNodes(LinkedList);
 
-            for (int i = 0; i < max; i++)
+            for (int i = 0; i < max - 1; i++)
             {
-                for (int j = i + 1; j > 0 && j < max; j--)
+                for (int j = i + 1; j > 0; j--)
                 {
                     LinkedListNode<double> current = LinkedList.Find(LinkedList.ElementAt(j));
                     LinkedListNode<double> previous = LinkedList.Find(LinkedList.ElementAt(j - 1));
@@ -174,64 +202,102 @@ namespace MalinSatelliteDataProcessing
             return true;
         }
 
-        //private int BinarySearchIterative(LinkedList<double> LinkedList, int searchTarget, int min, int max)
-        //{
-        //    if (min <= max - 1)
-        //    {
-        //        int mid = (min + max) / 2;
-        //        if (searchTarget == LinkedList.ElementAt(mid))
-        //        {
-        //            return mid;
-        //        }
-        //        else if (searchTarget < LinkedList.ElementAt(mid))
-        //        {
-        //            return BinarySearchRecursive(LinkedList, searchTarget, min, max);
+        private int BinarySearchIterative(LinkedList<double> LinkedList, int searchTarget, int min, int max)
+        {
+            while (min <= max - 1)
+            {
+                int mid = (min + max) / 2;
+                if (searchTarget == LinkedList.ElementAt(mid))
+                {
+                    return mid;
+                }
+                else if (searchTarget < LinkedList.ElementAt(mid))
+                {
+                    max = mid - 1;
 
-        //        }
-        //        else
-        //        {
-        //            return BinarySearchRecursive(LinkedList, searchTarget, min, max);
-        //        }
-        //    }
-        //}
+                }
+                else
+                {
+                    min = mid + 1;
+                }
+            }
 
-        //private int BinarySearchRecursive(LinkedList<double> LinkedList, int searchTarget, int min, int max)
-        //{
-        //    if (min <= max - 1)
-        //    {
-        //        int mid = (min + max) / 2;
-        //        if (searchTarget == LinkedList.ElementAt(mid))
-        //        {
-        //            return mid;
-        //        }
-        //        else if (searchTarget < LinkedList.ElementAt(mid))
-        //        {
-        //            return BinarySearchRecursive(LinkedList, searchTarget, min, max);
+            return -1;
 
-        //        }
-        //        else
-        //        {
-        //            return BinarySearchRecursive(LinkedList, searchTarget, min, max);
-        //        }
-        //    }
-        //}
+        }
+
+        private int BinarySearchRecursive(LinkedList<double> LinkedList, int searchTarget, int min, int max)
+        {
+            if (min <= max - 1)
+            {
+                int mid = (min + max) / 2;
+                if (searchTarget == LinkedList.ElementAt(mid))
+                {
+                    return mid;
+                }
+                else if (searchTarget < LinkedList.ElementAt(mid))
+                {
+                    return BinarySearchRecursive(LinkedList, searchTarget, min, max);
+
+                }
+                else
+                {
+                    return BinarySearchRecursive(LinkedList, searchTarget, min, max);
+                }
+            }
+
+            return -1;
+        }
 
         #endregion
 
         #region UIButtonMethods
+        //4.11	Create four button click methods that will search the LinkedList for an integer value entered into a textbox on the form.The four methods are:
+        //1.	Method for Sensor A and Binary Search Iterative
+        //2.	Method for Sensor A and Binary Search Recursive
+        //3.	Method for Sensor B and Binary Search Iterative
+        //4.	Method for Sensor B and Binary Search Recursive
+        //The search code must check to ensure the data is sorted, then start a stopwatch before calling the search method.
+        //Once the search is complete the stopwatch will stop, and the number of ticks will be displayed in a read only textbox.
+        //Finally, the code/method will call the “DisplayListboxData” method and highlight the search target number and two values on each side.
+
+        private void aBinaryIterativeButton_Click(object sender, RoutedEventArgs e)
+        {
+            int searchTarget = int.Parse(aSearchTextBox.Text);
+
+            int searchIndex = BinarySearchIterative(sensorDataA, searchTarget, 0, 400);
+            sensorAListBox.SelectedIndex = searchIndex;
+        }
+
+        private void aBinaryRecursiveButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        //4.12	Create four button click methods that will sort the LinkedList using the Selection and Insertion methods.The four methods are:
+        //1.	Method for Sensor A and Selection Sort
+        //2.	Method for Sensor A and Insertion Sort
+        //3.	Method for Sensor B and Selection Sort
+        //4.	Method for Sensor B and Insertion Sort
+        //The button method must start a stopwatch before calling the sort method.Once the sort is complete the stopwatch will stop,
+        //and the number of milliseconds will be displayed in a read only textbox. Finally, the code/method will call the “ShowAllSensorData”
+        //method and “DisplayListboxData” for the appropriate sensor.
 
         private void aSelectionSortButton_Click(object sender, RoutedEventArgs e)
         {
-            SelectionSort(sensorDataA);
-            DisplayListboxData(sensorDataA, sensorAListBox);
+            if (SelectionSort(sensorDataA))
+            {
+                DisplayListboxData(sensorDataA, sensorAListBox);
+            }            
         }
 
         private void aInsertionSortButton_Click(object sender, RoutedEventArgs e)
         {
-            InsertionSort(sensorDataA);
-            DisplayListboxData(sensorDataA, sensorAListBox);
+            if (InsertionSort(sensorDataA))
+            {
+                DisplayListboxData(sensorDataA, sensorAListBox);
+            }            
         }
-
         #endregion
 
 

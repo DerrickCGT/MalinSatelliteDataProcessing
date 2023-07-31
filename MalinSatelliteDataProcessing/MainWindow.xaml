@@ -30,8 +30,8 @@
         <Label Content="Sigma" HorizontalAlignment="Left" Margin="108,46,0,0" VerticalAlignment="Top"/>
         <Label Grid.Column="1" Content="Sensor A" HorizontalAlignment="Center" Margin="0,18,0,0" VerticalAlignment="Top" FontSize="14"/>
         <Label Grid.Column="2" Content="Sensor B" HorizontalAlignment="Center" Margin="0,18,0,0" VerticalAlignment="Top" FontSize="14"/>
-        <Button x:Name="aBinaryIterativeButton" Grid.Column="1" Content="Search" HorizontalAlignment="Left" Margin="20,110,0,0" VerticalAlignment="Top" Width="50" Height="20"/>
-        <Button x:Name="aBinaryRecursiveButton" Grid.Column="1" Content="Search" HorizontalAlignment="Left" Margin="20,230,0,0" VerticalAlignment="Top" Width="50" Height="20"/>
+        <Button x:Name="aBinaryIterativeButton" Grid.Column="1" Content="Search" HorizontalAlignment="Left" Margin="20,110,0,0" VerticalAlignment="Top" Width="50" Height="20" Click="aBinaryIterativeButton_Click"/>
+        <Button x:Name="aBinaryRecursiveButton" Grid.Column="1" Content="Search" HorizontalAlignment="Left" Margin="20,230,0,0" VerticalAlignment="Top" Width="50" Height="20" Click="aBinaryRecursiveButton_Click"/>
         <Button x:Name="aSelectionSortButton" Grid.Column="1" Content="Sort" HorizontalAlignment="Left" Margin="20,450,0,0" VerticalAlignment="Top" Width="50" Height="20" Click="aSelectionSortButton_Click"/>
         <Button x:Name="aInsertionSortButton" Grid.Column="1" Content="Sort" HorizontalAlignment="Left" Margin="20,570,0,0" VerticalAlignment="Top" Width="50" Height="20" Click="aInsertionSortButton_Click"/>
         <TextBox x:Name="aSearchTextBox" Grid.Column="1" HorizontalAlignment="Left" Margin="75,330,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="40" Height="20"/>
