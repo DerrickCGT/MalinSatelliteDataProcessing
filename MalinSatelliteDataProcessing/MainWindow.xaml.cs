@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Diagnostics;
 
 namespace MalinSatelliteDataProcessing
 
@@ -29,20 +30,24 @@ namespace MalinSatelliteDataProcessing
         }
 
         #region GlobalMethods
-        // 4.1	Create two data structures using the LinkedList<T> class from the C# Systems.Collections.Generic namespace.
-        // The data must be of type “double”; you are not permitted to use any additional classes, nodes, pointers or data
-        // structures (array, list, etc) in the implementation of this application. The two LinkedLists of type double are
-        // to be declared as global within the “public partial class”.
+        /*
+        4.1	Create two data structures using the LinkedList<T> class from the C# Systems.Collections.Generic namespace.
+         The data must be of type “double”; you are not permitted to use any additional classes, nodes, pointers or data
+         structures(array, list, etc) in the implementation of this application.The two LinkedLists of type double are
+         to be declared as global within the “public partial class”.
+        */
         LinkedList<Double> sensorDataA = new LinkedList<Double>();
         LinkedList<Double> sensorDataB = new LinkedList<Double>();
 
 
 
-        // 4.2	Copy the Galileo.DLL file into the root directory of your solution folder and add the appropriate reference in the solution explorer.
-        // Create a method called “LoadData” which will populate both LinkedLists.
-        // Declare an instance of the Galileo library in the method and create the appropriate loop construct to populate the two LinkedList;
-        // the data from Sensor A will populate the first LinkedList, while the data from Sensor B will populate the second LinkedList.
-        // The LinkedList size will be hardcoded inside the method and must be equal to 400. The input parameters are empty, and the return type is void.
+        /*
+         4.2	Copy the Galileo.DLL file into the root directory of your solution folder and add the appropriate reference in the solution explorer.
+         Create a method called “LoadData” which will populate both LinkedLists.
+         Declare an instance of the Galileo library in the method and create the appropriate loop construct to populate the two LinkedList;
+         the data from Sensor A will populate the first LinkedList, while the data from Sensor B will populate the second LinkedList.
+         The LinkedList size will be hardcoded inside the method and must be equal to 400. The input parameters are empty, and the return type is void.
+        */
         private void LoadData()
         {
             sensorDataA.Clear();
@@ -64,17 +69,20 @@ namespace MalinSatelliteDataProcessing
             }
         }
 
-        //4.3	Create a custom method called “ShowAllSensorData” which will display both LinkedLists in a ListView.
-        //Add column titles “Sensor A” and “Sensor B” to the ListView. The input parameters are empty, and the return type is void.
+        /*        
+        4.3	Create a custom method called “ShowAllSensorData” which will display both LinkedLists in a ListView.
+        Add column titles “Sensor A” and “Sensor B” to the ListView.The input parameters are empty, and the return type is void.
+        */
         private void ShowAllSensorData()
         {
 
-            //List<double> aSensorList = sensorDataA.ToList();
-            //List<double> bSensorList = sensorDataB.ToList();
-
-            //var sensorDataItems = aSensorList.Zip(bSensorList, (sensorA, sensorB) => new { SensorA = sensorA, SensorB = sensorB });
-
-            //sensorListView.ItemsSource = sensorDataItems;
+            /*
+            Another method to load itemsource:
+            List<double> aSensorList = sensorDataA.ToList();
+            List<double> bSensorList = sensorDataB.ToList();
+            var sensorDataItems = aSensorList.Zip(bSensorList, (sensorA, sensorB) => new { SensorA = sensorA, SensorB = sensorB });
+            sensorListView.ItemsSource = sensorDataItems;
+            */
 
             var sensorDataItems = new List<object>();
 
@@ -93,31 +101,35 @@ namespace MalinSatelliteDataProcessing
             sensorListView.ItemsSource = sensorDataItems;
         }
 
-        //4.4	Create a button and associated click method that will call the LoadData and ShowAllSensorData methods.
-        //The input parameters are empty, and the return type is void.
+        /*
+        4.4	Create a button and associated click method that will call the LoadData and ShowAllSensorData methods.
+        The input parameters are empty, and the return type is void.
+        */
         private void loadButton_Click(object sender, RoutedEventArgs e)
         {
             LoadData();
             ShowAllSensorData();
-  
+
         }
         
         #endregion
 
         #region UtilityMethods
 
-        //4.5	Create a method called “NumberOfNodes” that will return an integer which is the number of nodes(elements) in a LinkedList.
-        //The method signature will have an input parameter of type LinkedList, and the calling code argument is the linkedlist name.
+        /*
+        4.5	Create a method called “NumberOfNodes” that will return an integer which is the number of nodes(elements) in a LinkedList.
+        The method signature will have an input parameter of type LinkedList, and the calling code argument is the linkedlist name.
+        */
         private int NumberOfNodes(LinkedList<double> LinkedList)
         {
-            int nodesNumber = LinkedList.Count;
-
-            return nodesNumber;
+            return LinkedList.Count;
         }
 
-        //4.6	Create a method called “DisplayListboxData” that will display the content of a LinkedList inside the appropriate ListBox.
-        //The method signature will have two input parameters; a LinkedList, and the ListBox name.
-        //The calling code argument is the linkedlist name and the listbox name.
+        /* 
+        4.6	Create a method called “DisplayListboxData” that will display the content of a LinkedList inside the appropriate ListBox.
+        The method signature will have two input parameters; a LinkedList, and the ListBox name.
+        The calling code argument is the linkedlist name and the listbox name.
+        */
         private void DisplayListboxData(LinkedList<double> LinkedList, ListBox ListBox)
         {
             ListBox.ItemsSource = null;
@@ -127,6 +139,11 @@ namespace MalinSatelliteDataProcessing
         #endregion
 
         #region SortAndSearchMethods
+        /*       
+        4.7	Create a method called “SelectionSort” which has a single input parameter of type LinkedList, 
+        while the calling code argument is the linkedlist name.The method code must follow the pseudo code supplied below in the Appendix.
+        The return type is Boolean.
+        */
 
         private Boolean SelectionSort(LinkedList<double> LinkedList)
         {
@@ -153,34 +170,43 @@ namespace MalinSatelliteDataProcessing
             return true;
         }
 
-        //below is the confusion of code and can be fixed by adding the new line of code
-        //private void SelectionSort(LinkedList<double> LinkedList)
-        //{
-        //    int max = NumberOfNodes(LinkedList);
+        /*        
+        below is the confusion of code and can be fixed by adding the new line of code
+        private void SelectionSort(LinkedList<double> LinkedList)
+        {
+            int max = NumberOfNodes(LinkedList);
 
-        //    for (int i = 0; i < max; i++)
-        //    {
-        //        int min = i;
-        //        LinkedListNode<double> currentMin = LinkedList.Find(LinkedList.ElementAt(min));
-        //        LinkedListNode<double> currentI = LinkedList.Find(LinkedList.ElementAt(i));
+            for (int i = 0; i < max; i++)
+            {
+                int min = i;
+                LinkedListNode<double> currentMin = LinkedList.Find(LinkedList.ElementAt(min));
+                LinkedListNode<double> currentI = LinkedList.Find(LinkedList.ElementAt(i));
 
-        //        for (int j = i + 1; j < max; j++)
-        //        {
-        //            LinkedListNode<double> tempNode = LinkedList.Find(LinkedList.ElementAt(j));
-        //            if (tempNode.Value < currentMin.Value)
-        //            {
-        //                min = j;
-        //                  currentMin = tempnode //it is require to add this line as currentMin will not automatically update
-                        
-        //            }
-        //        }
-                
-        //        double temp = currentMin.Value;
-        //        currentMin.Value = currentI.Value;
-        //        currentI.Value = temp;
-        //    }
-        //}
+                for (int j = i + 1; j < max; j++)
+                {
+                    LinkedListNode<double> tempNode = LinkedList.Find(LinkedList.ElementAt(j));
+                    if (tempNode.Value < currentMin.Value)
+                    {
+                        min = j;
+                        currentMin = tempnode //it is require to add this line as currentMin will not automatically update
 
+
+                    }
+                }
+
+                double temp = currentMin.Value;
+                currentMin.Value = currentI.Value;
+                currentI.Value = temp;
+            }
+        }
+        */
+
+        /*       
+        4.8	Create a method called “InsertionSort” which has a single parameter of type LinkedList, 
+        while the calling code argument is the linkedlist name. 
+        The method code must follow the pseudo code supplied below in the Appendix. 
+        The return type is Boolean.
+        */
         private Boolean InsertionSort(LinkedList<double> LinkedList)
         {
             int max = NumberOfNodes(LinkedList);
@@ -202,8 +228,15 @@ namespace MalinSatelliteDataProcessing
             return true;
         }
 
+        /*
+        4.9	Create a method called “BinarySearchIterative” which has the following four parameters: LinkedList, SearchValue, Minimum and Maximum.
+        This method will return an integer of the linkedlist element from a successful search or the nearest neighbour value.
+        The calling code argument is the linkedlist name, search value, minimum list size and the number of nodes in the list.
+        The method code must follow the pseudo code supplied below in the Appendix.
+        */
         private int BinarySearchIterative(LinkedList<double> LinkedList, int searchTarget, int min, int max)
         {
+            
             while (min <= max - 1)
             {
                 int mid = (min + max) / 2;
@@ -213,19 +246,26 @@ namespace MalinSatelliteDataProcessing
                 }
                 else if (searchTarget < LinkedList.ElementAt(mid))
                 {
-                    max = mid - 1;
+                    max = mid - 1;                 
 
                 }
                 else
                 {
                     min = mid + 1;
+                    
                 }
             }
 
-            return -1;
+            return (min + max) / 2;
 
         }
 
+        /*
+        4.10	Create a method called “BinarySearchRecursive” which has the following four parameters: LinkedList, SearchValue, Minimum and Maximum.
+        This method will return an integer of the linkedlist element from a successful search or the nearest neighbour value.
+        The calling code argument is the linkedlist name, search value, minimum list size and the number of nodes in the list.
+        The method code must follow the pseudo code supplied below in the Appendix.
+        */
         private int BinarySearchRecursive(LinkedList<double> LinkedList, int searchTarget, int min, int max)
         {
             if (min <= max - 1)
@@ -246,32 +286,78 @@ namespace MalinSatelliteDataProcessing
                 }
             }
 
-            return -1;
+            return (min + max) / 2;
         }
 
         #endregion
 
         #region UIButtonMethods
-        //4.11	Create four button click methods that will search the LinkedList for an integer value entered into a textbox on the form.The four methods are:
-        //1.	Method for Sensor A and Binary Search Iterative
-        //2.	Method for Sensor A and Binary Search Recursive
-        //3.	Method for Sensor B and Binary Search Iterative
-        //4.	Method for Sensor B and Binary Search Recursive
-        //The search code must check to ensure the data is sorted, then start a stopwatch before calling the search method.
-        //Once the search is complete the stopwatch will stop, and the number of ticks will be displayed in a read only textbox.
-        //Finally, the code/method will call the “DisplayListboxData” method and highlight the search target number and two values on each side.
-
+        /*
+        4.11	Create four button click methods that will search the LinkedList for an integer value entered into a textbox on the form.The four methods are:
+        1.	Method for Sensor A and Binary Search Iterative
+        2.	Method for Sensor A and Binary Search Recursive
+        3.	Method for Sensor B and Binary Search Iterative
+        4.	Method for Sensor B and Binary Search Recursive
+        The search code must check to ensure the data is sorted, then start a stopwatch before calling the search method.
+        Once the search is complete the stopwatch will stop, and the number of ticks will be displayed in a read only textbox.
+        Finally, the code/method will call the “DisplayListboxData” method and highlight the search target number and two values on each side.
+        */
         private void aBinaryIterativeButton_Click(object sender, RoutedEventArgs e)
         {
             int searchTarget = int.Parse(aSearchTextBox.Text);
 
-            int searchIndex = BinarySearchIterative(sensorDataA, searchTarget, 0, 400);
-            sensorAListBox.SelectedIndex = searchIndex;
+            long timer_milliseconds = CalculateTimer(() =>
+            {
+                int searchIndex = BinarySearchIterative(sensorDataA, searchTarget, 0, NumberOfNodes(sensorDataA) - 1);
+            });
+
+            int searchIndex = BinarySearchIterative(sensorDataA, searchTarget, 0, NumberOfNodes(sensorDataA) - 1);
+            aBinaryIterativeTextBox.Text = timer_milliseconds.ToString() + " ticks";
+            MessageBox.Show($"{searchTarget} is found on index {searchIndex}.", "Binary Iterative Search");
+            HighLight_ListBox(searchIndex, sensorAListBox);
+            
         }
 
         private void aBinaryRecursiveButton_Click(object sender, RoutedEventArgs e)
         {
+            int searchTarget = int.Parse(aSearchTextBox.Text);
 
+            long timer_milliseconds = CalculateTimer(() =>
+            {
+                int searchIndex = BinarySearchRecursive(sensorDataA, searchTarget, 0, NumberOfNodes(sensorDataA) - 1);
+            });
+            int searchIndex = BinarySearchRecursive(sensorDataA, searchTarget, 0, NumberOfNodes(sensorDataA)-1);
+
+            MessageBox.Show($"{searchTarget} is found on index {searchIndex}.", "Binary Recursive Search");
+            HighLight_ListBox(searchIndex, sensorAListBox);
+
+        }
+
+        private void HighLight_ListBox(int found, ListBox listBox)
+        {
+            sensorAListBox.SelectedItems.Clear();
+
+            int range = 2;
+            int max_range = Math.Min(found + range, sensorDataA.Count - 1);
+            int min_range = Math.Max(found - range, 0);
+
+
+            for (int index = min_range; index <= max_range; index++)
+            {
+                var selectedItem = sensorDataA.ElementAt(index);
+                sensorAListBox.SelectedItems.Add(selectedItem);
+            }
+        }
+
+        private long CalculateTimer(Action method)
+        {
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            method();
+
+            stopwatch.Stop();
+            return stopwatch.ElapsedTicks;
         }
 
         //4.12	Create four button click methods that will sort the LinkedList using the Selection and Insertion methods.The four methods are:
@@ -297,6 +383,22 @@ namespace MalinSatelliteDataProcessing
             {
                 DisplayListboxData(sensorDataA, sensorAListBox);
             }            
+        }
+
+        private void bSelectionSortButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectionSort(sensorDataB))
+            {
+                DisplayListboxData(sensorDataB, sensorBListBox);
+            }
+        }
+
+        private void bInsertionSortButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (InsertionSort(sensorDataB))
+            {
+                DisplayListboxData(sensorDataB, sensorBListBox);
+            }
         }
         #endregion
 
