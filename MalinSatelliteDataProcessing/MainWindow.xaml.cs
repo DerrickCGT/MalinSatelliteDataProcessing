@@ -460,7 +460,7 @@ namespace MalinSatelliteDataProcessing
             for (int index = min_range; index <= max_range; index++)
             {
                 var selectedItem = sensorDataA.ElementAt(index);
-                sensorAListBox.SelectedItems.Add(selectedItem);
+                sensorAListBox.SelectedItems.Add(selectedItem); // error
             }
         }
 
