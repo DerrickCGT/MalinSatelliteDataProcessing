@@ -34,7 +34,7 @@
         <Button x:Name="aBinaryRecursiveButton" Grid.Column="1" Content="Search" HorizontalAlignment="Left" Margin="20,230,0,0" VerticalAlignment="Top" Width="50" Height="20" Click="aBinaryRecursiveButton_Click"/>
         <Button x:Name="aSelectionSortButton" Grid.Column="1" Content="Sort" HorizontalAlignment="Left" Margin="20,450,0,0" VerticalAlignment="Top" Width="50" Height="20" Click="aSelectionSortButton_Click"/>
         <Button x:Name="aInsertionSortButton" Grid.Column="1" Content="Sort" HorizontalAlignment="Left" Margin="20,570,0,0" VerticalAlignment="Top" Width="50" Height="20" Click="aInsertionSortButton_Click"/>
-        <TextBox x:Name="aSearchTextBox" Grid.Column="1" HorizontalAlignment="Left" Margin="75,330,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" Height="20"/>
+        <TextBox x:Name="aSearchTextBox" Grid.Column="1" HorizontalAlignment="Left" Margin="75,330,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" Height="20" PreviewTextInput="aSearchTextBox_PreviewTextInput"/>
         <Label HorizontalAlignment="Left" Margin="20,320,0,0" VerticalAlignment="Top" Width="50" Height="50" FontSize="10"  Grid.Column="1" Grid.RowSpan="1">
             <TextBlock TextWrapping="WrapWithOverflow" Width="35" Height="35" FontSize="12">
                 Search Target
@@ -44,15 +44,15 @@
         <Label Grid.Column="1" Content="Binary Search Recursive" HorizontalAlignment="Left" Margin="0,205,0,0" VerticalAlignment="Top"/>
         <Label Grid.Column="1" Content="Selection Sort" HorizontalAlignment="Left" Margin="20,425,0,0" VerticalAlignment="Top"/>
         <Label Grid.Column="1" Content="Insertion Sort" HorizontalAlignment="Left" Margin="20,545,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="aBinaryIterativeTextBox" Grid.Column="1" HorizontalAlignment="Left" Margin="20,135,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="100" IsReadOnly="True" Background="#FFE5E7EC"/>
-        <TextBox x:Name="aBinaryRecursiveTextBox" Grid.Column="1" HorizontalAlignment="Left" Margin="20,255,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="100" IsReadOnly="True" Background="#FFE5E7EC"/>
-        <TextBox x:Name="aSelectionSortTextBox" Grid.Column="1" HorizontalAlignment="Left" Margin="20,475,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="100" IsReadOnly="True" Background="#FFE5E7EC"/>
-        <TextBox x:Name="aInsertionSortTextBox" Grid.Column="1" HorizontalAlignment="Left" Margin="20,595,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="100" IsReadOnly="True" Background="#FFE5E7EC"/>
+        <TextBox x:Name="aBinaryIterativeTextBox" Grid.Column="1" HorizontalAlignment="Left" Margin="20,135,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" IsReadOnly="True" Background="#FFE5E7EC"/>
+        <TextBox x:Name="aBinaryRecursiveTextBox" Grid.Column="1" HorizontalAlignment="Left" Margin="20,255,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" IsReadOnly="True" Background="#FFE5E7EC"/>
+        <TextBox x:Name="aSelectionSortTextBox" Grid.Column="1" HorizontalAlignment="Left" Margin="20,475,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" IsReadOnly="True" Background="#FFE5E7EC"/>
+        <TextBox x:Name="aInsertionSortTextBox" Grid.Column="1" HorizontalAlignment="Left" Margin="20,595,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" IsReadOnly="True" Background="#FFE5E7EC"/>
 
-        <Button x:Name="bBinaryIterativeButton" Grid.Column="2" Content="Search" HorizontalAlignment="Left" Margin="20,110,0,0" VerticalAlignment="Top" Width="50" Height="20"/>
-        <Button x:Name="bBinaryRecursiveButton" Grid.Column="2" Content="Search" HorizontalAlignment="Left" Margin="20,230,0,0" VerticalAlignment="Top" Width="50" Height="20"/>
-        <Button x:Name="bSelectionSortButton" Grid.Column="2" Content="Sort" HorizontalAlignment="Left" Margin="20,450,0,0" VerticalAlignment="Top" Width="50" Height="20"/>
-        <Button x:Name="bInsertionSortButton" Grid.Column="2" Content="Sort" HorizontalAlignment="Left" Margin="20,570,0,0" VerticalAlignment="Top" Width="50" Height="20"/>
+        <Button x:Name="bBinaryIterativeButton" Grid.Column="2" Content="Search" HorizontalAlignment="Left" Margin="20,110,0,0" VerticalAlignment="Top" Width="50" Height="20" Click="bBinaryIterativeButton_Click"/>
+        <Button x:Name="bBinaryRecursiveButton" Grid.Column="2" Content="Search" HorizontalAlignment="Left" Margin="20,230,0,0" VerticalAlignment="Top" Width="50" Height="20" Click="bBinaryRecursiveButton_Click"/>
+        <Button x:Name="bSelectionSortButton" Grid.Column="2" Content="Sort" HorizontalAlignment="Left" Margin="20,450,0,0" VerticalAlignment="Top" Width="50" Height="20" Click="bSelectionSortButton_Click"/>
+        <Button x:Name="bInsertionSortButton" Grid.Column="2" Content="Sort" HorizontalAlignment="Left" Margin="20,570,0,0" VerticalAlignment="Top" Width="50" Height="20" Click="bInsertionSortButton_Click"/>
         <TextBox x:Name="bSearchTextBox" Grid.Column="2" HorizontalAlignment="Left" Margin="75,330,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" Height="20"/>
         <Label HorizontalAlignment="Left" Margin="20,320,0,0" VerticalAlignment="Top" Width="50" Height="50" FontSize="10"  Grid.Column="2" Grid.RowSpan="1">
             <TextBlock TextWrapping="WrapWithOverflow" Width="35" Height="35" FontSize="12">
@@ -63,9 +63,9 @@
         <Label Grid.Column="2" Content="Binary Search Recursive" HorizontalAlignment="Left" Margin="0,205,0,0" VerticalAlignment="Top"/>
         <Label Grid.Column="2" Content="Selection Sort" HorizontalAlignment="Left" Margin="20,425,0,0" VerticalAlignment="Top"/>
         <Label Grid.Column="2" Content="Insertion Sort" HorizontalAlignment="Left" Margin="20,545,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="bBinaryIterativeTextBox" Grid.Column="2" HorizontalAlignment="Left" Margin="20,135,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="100" IsReadOnly="True" Background="#FFE5E7EC"/>
-        <TextBox x:Name="bBinaryRecursiveTextBox" Grid.Column="2" HorizontalAlignment="Left" Margin="20,255,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="100" IsReadOnly="True" Background="#FFE5E7EC"/>
-        <TextBox x:Name="bSelectionSortTextBox" Grid.Column="2" HorizontalAlignment="Left" Margin="20,475,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="100" IsReadOnly="True" Background="#FFE5E7EC"/>
-        <TextBox x:Name="bInsertionSortTextBox" Grid.Column="2" HorizontalAlignment="Left" Margin="20,595,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="100" IsReadOnly="True" Background="#FFE5E7EC"/>
+        <TextBox x:Name="bBinaryIterativeTextBox" Grid.Column="2" HorizontalAlignment="Left" Margin="20,135,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" IsReadOnly="True" Background="#FFE5E7EC"/>
+        <TextBox x:Name="bBinaryRecursiveTextBox" Grid.Column="2" HorizontalAlignment="Left" Margin="20,255,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" IsReadOnly="True" Background="#FFE5E7EC"/>
+        <TextBox x:Name="bSelectionSortTextBox" Grid.Column="2" HorizontalAlignment="Left" Margin="20,475,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" IsReadOnly="True" Background="#FFE5E7EC"/>
+        <TextBox x:Name="bInsertionSortTextBox" Grid.Column="2" HorizontalAlignment="Left" Margin="20,595,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" IsReadOnly="True" Background="#FFE5E7EC"/>
     </Grid>
 </Window>

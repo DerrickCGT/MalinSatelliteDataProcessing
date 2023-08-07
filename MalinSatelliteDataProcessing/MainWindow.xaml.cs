@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Text.RegularExpressions;
 using System.Diagnostics;
 
 namespace MalinSatelliteDataProcessing
@@ -136,6 +137,11 @@ namespace MalinSatelliteDataProcessing
             ListBox.ItemsSource = LinkedList;
         }
 
+        private void ClearDisplay()
+        {
+
+        }
+
         #endregion
 
         #region SortAndSearchMethods
@@ -225,6 +231,7 @@ namespace MalinSatelliteDataProcessing
                     }
                 }
             }
+            
             return true;
         }
 
@@ -277,12 +284,12 @@ namespace MalinSatelliteDataProcessing
                 }
                 else if (searchTarget < LinkedList.ElementAt(mid))
                 {
-                    return BinarySearchRecursive(LinkedList, searchTarget, min, max);
+                    return BinarySearchRecursive(LinkedList, searchTarget, min, mid -1);
 
                 }
                 else
                 {
-                    return BinarySearchRecursive(LinkedList, searchTarget, min, max);
+                    return BinarySearchRecursive(LinkedList, searchTarget, mid + 1, max);
                 }
             }
 
@@ -304,35 +311,143 @@ namespace MalinSatelliteDataProcessing
         */
         private void aBinaryIterativeButton_Click(object sender, RoutedEventArgs e)
         {
-            int searchTarget = int.Parse(aSearchTextBox.Text);
-
-            long timer_milliseconds = CalculateTimer(() =>
+            if (InsertionSort(sensorDataA))
             {
-                int searchIndex = BinarySearchIterative(sensorDataA, searchTarget, 0, NumberOfNodes(sensorDataA) - 1);
-            });
+                int searchTarget;
+                if(int.TryParse(aSearchTextBox.Text, out searchTarget))
+                {
+                    if (isValidSearchInput(sensorDataA, searchTarget))
+                    {
+                         long timer_ticks = TimerCalculateTicks(() =>
+                        {
+                            int searchIndex = BinarySearchIterative(sensorDataA, searchTarget, 0, NumberOfNodes(sensorDataA) - 1);
+                        });
 
-            int searchIndex = BinarySearchIterative(sensorDataA, searchTarget, 0, NumberOfNodes(sensorDataA) - 1);
-            aBinaryIterativeTextBox.Text = timer_milliseconds.ToString() + " ticks";
-            MessageBox.Show($"{searchTarget} is found on index {searchIndex}.", "Binary Iterative Search");
-            HighLight_ListBox(searchIndex, sensorAListBox);
-            
+                        int searchIndex = BinarySearchIterative(sensorDataA, searchTarget, 0, NumberOfNodes(sensorDataA) - 1);
+                        aBinaryIterativeTextBox.Text = timer_ticks.ToString() + " ticks";
+                        DisplayListboxData(sensorDataA, sensorAListBox);
+                        MessageBox.Show($"{searchTarget} is found on index {searchIndex}.", "Binary Iterative Search");
+                        HighLight_ListBox(searchIndex, sensorAListBox);
+                        sensorAListBox.Focus();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error! Search input is lesser than minimum value or greater than maximum value.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Error! Invalid Input", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+
+
+            }            
         }
 
         private void aBinaryRecursiveButton_Click(object sender, RoutedEventArgs e)
         {
-            int searchTarget = int.Parse(aSearchTextBox.Text);
 
-            long timer_milliseconds = CalculateTimer(() =>
+            if (InsertionSort(sensorDataA))
             {
-                int searchIndex = BinarySearchRecursive(sensorDataA, searchTarget, 0, NumberOfNodes(sensorDataA) - 1);
-            });
-            int searchIndex = BinarySearchRecursive(sensorDataA, searchTarget, 0, NumberOfNodes(sensorDataA)-1);
+                int searchTarget;
+                if (int.TryParse(aSearchTextBox.Text, out searchTarget))
+                {
 
-            MessageBox.Show($"{searchTarget} is found on index {searchIndex}.", "Binary Recursive Search");
-            HighLight_ListBox(searchIndex, sensorAListBox);
+                    if (isValidSearchInput(sensorDataA, searchTarget))
+                    {                   
+                        long timer_ticks = TimerCalculateTicks(() =>
+                        {
+                            int searchIndex = BinarySearchRecursive(sensorDataA, searchTarget, 0, NumberOfNodes(sensorDataA) - 1);
+                        });
 
+                        int searchIndex = BinarySearchRecursive(sensorDataA, searchTarget, 0, NumberOfNodes(sensorDataA) - 1);
+                        aBinaryRecursiveTextBox.Text = timer_ticks.ToString() + " ticks";
+                        DisplayListboxData(sensorDataA, sensorAListBox);
+                        MessageBox.Show($"{searchTarget} is found on index {searchIndex}.", "Binary Recursive Search");
+                        HighLight_ListBox(searchIndex, sensorAListBox);
+                        sensorAListBox.Focus();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error! Search input is lesser than minimum value or greater than maximum value.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);                    
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Error! Invalid Input", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+
+            }
         }
 
+        private void bBinaryIterativeButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (InsertionSort(sensorDataB))
+            {
+                int searchTarget;
+                if (int.TryParse(bSearchTextBox.Text, out searchTarget))
+                {
+                    if (isValidSearchInput(sensorDataB, searchTarget))
+                    {
+                        long timer_ticks = TimerCalculateTicks(() =>
+                        {
+                            int searchIndex = BinarySearchIterative(sensorDataB, searchTarget, 0, NumberOfNodes(sensorDataB) - 1);
+                        });
+
+                        int searchIndex = BinarySearchIterative(sensorDataB, searchTarget, 0, NumberOfNodes(sensorDataB) - 1);
+                        bBinaryIterativeTextBox.Text = timer_ticks.ToString() + " ticks";
+                        DisplayListboxData(sensorDataB, sensorBListBox);
+                        MessageBox.Show($"{searchTarget} is found on index {searchIndex}.", "Binary Iterative Search");
+                        HighLight_ListBox(searchIndex, sensorBListBox);
+                        sensorBListBox.Focus();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error! Search input is lesser than minimum value or greater than maximum value.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Error! Invalid Input", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+                
+        }
+
+        private void bBinaryRecursiveButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (InsertionSort(sensorDataB))
+            {
+                int searchTarget;
+                if (int.TryParse(bSearchTextBox.Text, out searchTarget))
+                {
+                    if (isValidSearchInput(sensorDataB, searchTarget))
+                    {
+                        long timer_ticks = TimerCalculateTicks(() =>
+                        {
+                            int searchIndex = BinarySearchRecursive(sensorDataB, searchTarget, 0, NumberOfNodes(sensorDataB) - 1);
+                        });
+
+                        int searchIndex = BinarySearchRecursive(sensorDataB, searchTarget, 0, NumberOfNodes(sensorDataB) - 1);
+                        bBinaryRecursiveTextBox.Text = timer_ticks.ToString() + " ticks";
+                        DisplayListboxData(sensorDataB, sensorBListBox);
+                        MessageBox.Show($"{searchTarget} is found on index {searchIndex}.", "Binary Recursive Search");
+                        HighLight_ListBox(searchIndex, sensorBListBox);
+                        sensorBListBox.Focus();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error! Search input is lesser than minimum value or greater than maximum value.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Error! Invalid Input", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }            
+        }
+
+        // Highlight the search target number and two values on each side.
         private void HighLight_ListBox(int found, ListBox listBox)
         {
             sensorAListBox.SelectedItems.Clear();
@@ -349,7 +464,8 @@ namespace MalinSatelliteDataProcessing
             }
         }
 
-        private long CalculateTimer(Action method)
+        // To calculate the timer in ticks for performing an action
+        private long TimerCalculateTicks(Action method)
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -371,39 +487,84 @@ namespace MalinSatelliteDataProcessing
 
         private void aSelectionSortButton_Click(object sender, RoutedEventArgs e)
         {
-            if (SelectionSort(sensorDataA))
+           
+            long timer_milliseconds = TimerCalculateMilliseconds(() =>
             {
-                DisplayListboxData(sensorDataA, sensorAListBox);
-            }            
+                SelectionSort(sensorDataA);
+            });
+            aSelectionSortTextBox.Text = timer_milliseconds.ToString() + " ms";
+            DisplayListboxData(sensorDataA, sensorAListBox);
         }
 
         private void aInsertionSortButton_Click(object sender, RoutedEventArgs e)
         {
-            if (InsertionSort(sensorDataA))
+            long timer_milliseconds = TimerCalculateMilliseconds(() =>
             {
-                DisplayListboxData(sensorDataA, sensorAListBox);
-            }            
+                InsertionSort(sensorDataA);
+            });
+            aInsertionSortTextBox.Text = timer_milliseconds.ToString() + " ms";
+            DisplayListboxData(sensorDataA, sensorAListBox);
         }
+                                  
 
         private void bSelectionSortButton_Click(object sender, RoutedEventArgs e)
         {
-            if (SelectionSort(sensorDataB))
+            long timer_milliseconds = TimerCalculateMilliseconds(() =>
             {
-                DisplayListboxData(sensorDataB, sensorBListBox);
-            }
+                SelectionSort(sensorDataB);
+            });
+            bSelectionSortTextBox.Text = timer_milliseconds.ToString() + " ms";
+            DisplayListboxData(sensorDataB, sensorBListBox);
+    
         }
 
         private void bInsertionSortButton_Click(object sender, RoutedEventArgs e)
         {
-            if (InsertionSort(sensorDataB))
+            long timer_milliseconds = TimerCalculateMilliseconds(() =>
             {
-                DisplayListboxData(sensorDataB, sensorBListBox);
+                InsertionSort(sensorDataB);
+            });
+            bInsertionSortTextBox.Text = timer_milliseconds.ToString() + " ms";
+            DisplayListboxData(sensorDataB, sensorBListBox);
+        }
+
+        // To calculate the timer in milliseconds for performing an action
+        private long TimerCalculateMilliseconds(Action method)
+        {
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            method();
+
+            stopwatch.Stop();
+            return stopwatch.ElapsedMilliseconds;
+        }
+
+        // 4.14	Add two textboxes for the search value; one for each sensor, ensure only numeric integer values can be entered.
+        private void aSearchTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            
+            Regex decimalRegex = new Regex(@"^[0-9]*$");
+            e.Handled = !decimalRegex.IsMatch(((TextBox)sender).Text + e.Text);
+        }
+
+        // To validate the search input is between the minimum value and maximum value
+        private Boolean isValidSearchInput(LinkedList<double> linkedList, int input)
+        {
+            double minValue = linkedList.First.Value;
+            double maxValue = linkedList.Last.Value;
+
+            if (input >= minValue && input <= maxValue)
+            {
+                return true;
+            }
+            else
+            {                
+                return false;               
             }
         }
         #endregion
 
 
     }
-
-
 }
