@@ -108,6 +108,7 @@ namespace MalinSatelliteDataProcessing
         */
         private void loadButton_Click(object sender, RoutedEventArgs e)
         {
+            ClearDisplay();
             LoadData();
             ShowAllSensorData();
 
@@ -137,8 +138,25 @@ namespace MalinSatelliteDataProcessing
             ListBox.ItemsSource = LinkedList;
         }
 
+        /*
+         This method will clear all display and enabled all button on the program.         
+         */
         private void ClearDisplay()
         {
+            sensorAListBox.ItemsSource = null;
+            sensorBListBox.ItemsSource = null;
+            aSearchTextBox.Clear();
+            aBinaryIterativeTextBox.Clear();
+            aBinaryRecursiveTextBox.Clear();
+            aInsertionSortTextBox.Clear();
+            aSelectionSortTextBox.Clear();
+            bSearchTextBox.Clear();
+            bBinaryIterativeTextBox.Clear();
+            bBinaryRecursiveTextBox.Clear();
+            bInsertionSortTextBox.Clear();
+            bSelectionSortTextBox.Clear();
+            disableASortButton(true);
+            disableBSortButton(true);
 
         }
 
@@ -176,36 +194,6 @@ namespace MalinSatelliteDataProcessing
             return true;
         }
 
-        /*        
-        below is the confusion of code and can be fixed by adding the new line of code
-        private void SelectionSort(LinkedList<double> LinkedList)
-        {
-            int max = NumberOfNodes(LinkedList);
-
-            for (int i = 0; i < max; i++)
-            {
-                int min = i;
-                LinkedListNode<double> currentMin = LinkedList.Find(LinkedList.ElementAt(min));
-                LinkedListNode<double> currentI = LinkedList.Find(LinkedList.ElementAt(i));
-
-                for (int j = i + 1; j < max; j++)
-                {
-                    LinkedListNode<double> tempNode = LinkedList.Find(LinkedList.ElementAt(j));
-                    if (tempNode.Value < currentMin.Value)
-                    {
-                        min = j;
-                        currentMin = tempnode //it is require to add this line as currentMin will not automatically update
-
-
-                    }
-                }
-
-                double temp = currentMin.Value;
-                currentMin.Value = currentI.Value;
-                currentI.Value = temp;
-            }
-        }
-        */
 
         /*       
         4.8	Create a method called “InsertionSort” which has a single parameter of type LinkedList, 
@@ -327,8 +315,9 @@ namespace MalinSatelliteDataProcessing
                         aBinaryIterativeTextBox.Text = timer_ticks.ToString() + " ticks";
                         DisplayListboxData(sensorDataA, sensorAListBox);
                         MessageBox.Show($"{searchTarget} is found on index {searchIndex}.", "Binary Iterative Search");
-                        HighLight_ListBox(searchIndex, sensorAListBox);
+                        HighLight_ListBox(searchIndex, sensorAListBox, sensorDataA);
                         sensorAListBox.Focus();
+                        
                     }
                     else
                     {
@@ -364,8 +353,9 @@ namespace MalinSatelliteDataProcessing
                         aBinaryRecursiveTextBox.Text = timer_ticks.ToString() + " ticks";
                         DisplayListboxData(sensorDataA, sensorAListBox);
                         MessageBox.Show($"{searchTarget} is found on index {searchIndex}.", "Binary Recursive Search");
-                        HighLight_ListBox(searchIndex, sensorAListBox);
+                        HighLight_ListBox(searchIndex, sensorAListBox, sensorDataA);
                         sensorAListBox.Focus();
+                        
                     }
                     else
                     {
@@ -398,8 +388,9 @@ namespace MalinSatelliteDataProcessing
                         bBinaryIterativeTextBox.Text = timer_ticks.ToString() + " ticks";
                         DisplayListboxData(sensorDataB, sensorBListBox);
                         MessageBox.Show($"{searchTarget} is found on index {searchIndex}.", "Binary Iterative Search");
-                        HighLight_ListBox(searchIndex, sensorBListBox);
+                        HighLight_ListBox(searchIndex, sensorBListBox, sensorDataB);
                         sensorBListBox.Focus();
+                        
                     }
                     else
                     {
@@ -432,8 +423,9 @@ namespace MalinSatelliteDataProcessing
                         bBinaryRecursiveTextBox.Text = timer_ticks.ToString() + " ticks";
                         DisplayListboxData(sensorDataB, sensorBListBox);
                         MessageBox.Show($"{searchTarget} is found on index {searchIndex}.", "Binary Recursive Search");
-                        HighLight_ListBox(searchIndex, sensorBListBox);
+                        HighLight_ListBox(searchIndex, sensorBListBox, sensorDataB);
                         sensorBListBox.Focus();
+                        
                     }
                     else
                     {
@@ -447,21 +439,23 @@ namespace MalinSatelliteDataProcessing
             }            
         }
 
-        // Highlight the search target number and two values on each side.
-        private void HighLight_ListBox(int found, ListBox listBox)
+        // Method to highlight the search target number and two values on each side, then scroll the listbox to selected indexes.
+        private void HighLight_ListBox(int found, ListBox listBox, LinkedList<double> linkedList)
         {
-            sensorAListBox.SelectedItems.Clear();
+            listBox.SelectedItems.Clear();
 
             int range = 2;
-            int max_range = Math.Min(found + range, sensorDataA.Count - 1);
+            int max_range = Math.Min(found + range, linkedList.Count - 1);
             int min_range = Math.Max(found - range, 0);
-
+            listBox.ScrollIntoView(linkedList.ElementAt(found));
 
             for (int index = min_range; index <= max_range; index++)
             {
-                var selectedItem = sensorDataA.ElementAt(index);
-                sensorAListBox.SelectedItems.Add(selectedItem); // error
+                var selectedItem = linkedList.ElementAt(index);
+                listBox.SelectedItems.Add(selectedItem); 
             }
+
+            
         }
 
         // To calculate the timer in ticks for performing an action
@@ -494,6 +488,7 @@ namespace MalinSatelliteDataProcessing
             });
             aSelectionSortTextBox.Text = timer_milliseconds.ToString() + " ms";
             DisplayListboxData(sensorDataA, sensorAListBox);
+            disableASortButton(false);
         }
 
         private void aInsertionSortButton_Click(object sender, RoutedEventArgs e)
@@ -504,6 +499,7 @@ namespace MalinSatelliteDataProcessing
             });
             aInsertionSortTextBox.Text = timer_milliseconds.ToString() + " ms";
             DisplayListboxData(sensorDataA, sensorAListBox);
+            disableASortButton(false);
         }
                                   
 
@@ -515,7 +511,8 @@ namespace MalinSatelliteDataProcessing
             });
             bSelectionSortTextBox.Text = timer_milliseconds.ToString() + " ms";
             DisplayListboxData(sensorDataB, sensorBListBox);
-    
+            disableBSortButton(false);
+
         }
 
         private void bInsertionSortButton_Click(object sender, RoutedEventArgs e)
@@ -526,6 +523,21 @@ namespace MalinSatelliteDataProcessing
             });
             bInsertionSortTextBox.Text = timer_milliseconds.ToString() + " ms";
             DisplayListboxData(sensorDataB, sensorBListBox);
+            disableBSortButton(false);
+        }
+
+        // Disable or Enable button after sort is performed (for data set A)
+        private void disableASortButton(bool boolType)
+        {
+            aInsertionSortButton.IsEnabled = boolType;
+            aSelectionSortButton.IsEnabled = boolType;
+        }
+
+        // Disable or Enable button after sort is performed (for data set B)
+        private void disableBSortButton(bool boolType)
+        {
+            bInsertionSortButton.IsEnabled = boolType;
+            bSelectionSortButton.IsEnabled = boolType;
         }
 
         // To calculate the timer in milliseconds for performing an action
